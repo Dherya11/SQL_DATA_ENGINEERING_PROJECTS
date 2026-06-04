@@ -1,0 +1,17 @@
+/*
+Find the top 10 companies for poating jobs 
+they must have > 3000 postings 
+LIMIT to only US JOBS
+*/
+EXPLAIN  ANALYZE
+SELECT 
+    cd.name AS comapny_name,
+    COUNT(jpf.job_id) AS posting_count
+FROM job_postings_fact AS jpf
+LEFT JOIN company_dim AS cd 
+ON jpf.company_id = cd.company_id
+WHERE jpf.job_country = 'United States'
+GROUP BY cd.name
+HAVING COUNT(jpf.job_id) > 3000
+ORDER BY posting_count DESC
+LIMIT 10;
