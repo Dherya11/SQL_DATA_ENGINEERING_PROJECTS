@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🗄️ SQL Data Engineering Projects
 
 A growing collection of SQL projects, lessons, and analyses focused on data engineering concepts — from fundamentals to real-world EDA. Built using **DuckDB** as the OLAP engine, with queries written and run in VS Code.
