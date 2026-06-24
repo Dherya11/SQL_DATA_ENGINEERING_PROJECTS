@@ -33,3 +33,30 @@ FROM staging.preferred_roles;
 ALTER TABLE staging.preferred_roles
 ADD COLUMN preferred_role BOOLEAN; 
 
+UPDATE staging.preferred_roles
+SET preferred_role = TRUE 
+WHERE role_id = 1 OR role_id = 2 ;
+
+UPDATE staging.preferred_roles
+SET preferred_role = FALSE
+WHERE role_id = 3 ;
+
+ALTER TABLE staging.preferred_roles
+RENAME TO priority_roles;
+
+
+SELECT * 
+FROM staging.priority_roles;
+
+ALTER TABLE staging.priority_roles
+RENAME COLUMN preferred_role TO priority_lvl;
+
+ALTER TABLE staging.priority_roles
+ALTER COLUMN priority_lvl TYPE INTEGER;
+
+UPDATE staging.priority_roles
+SET priority_lvl = 3
+WHERE role_id = 3;
+
+SELECT * 
+FROM staging.priority_roles;
