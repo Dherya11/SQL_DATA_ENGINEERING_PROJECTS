@@ -1,3 +1,5 @@
+-- .read 'LESSONS/Lessons/1.9/1_EDA/1.21_DDL_DML_pt1.sql'
+
 CREATE DATABASE IF NOT EXISTS job_mart;
 
 SHOW DATABASES;
@@ -11,11 +13,8 @@ CREATE SCHEMA IF NOT EXISTS staging;
 -- DROP SCHEMA staging;
 
 CREATE TABLE IF NOT EXISTS staging.preferred_roles( 
-    role_id INTEGER,
+    role_id INTEGER PRIMARY KEY ,
     role_name VARCHAR
-
-
-
 
 );
 
@@ -23,4 +22,14 @@ SELECT *
 FROM information_schema.tables
 WHERE table_catalog = 'job_mart';
 
-DROP TABLE IF EXISTS main.preferred_roles;
+INSERT INTO staging.preferred_roles(role_id, role_name)
+VALUES (1, 'Data Engineer'),
+        (2, 'Senior Data Engineer'),
+        (3, 'Senior Software Engineer');
+
+SELECT * 
+FROM staging.preferred_roles;      
+
+ALTER TABLE staging.preferred_roles
+ADD COLUMN preferred_role BOOLEAN; 
+
