@@ -20,7 +20,5 @@ FROM data_jobs.job_postings_fact AS jpf
 LEFT JOIN data_jobs.company_dim AS cd
     ON jpf.company_id = cd.company_id;
 
-    SELECT 
-    * 
-    FROM staging.job_postings_fact
-    LIMIT 10;
+    SELECT COUNT(*)
+    FROM staging.job_postings_fact;
