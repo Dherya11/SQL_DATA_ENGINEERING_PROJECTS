@@ -74,5 +74,17 @@ HAVING MEDIAN(salary_year_avg) > (
     FROM job_postings_fact
     WHERE job_work_from_home = TRUE
 )
-LIMIT 10   ; 
+LIMIT 10; 
 
+-- Question: Group jobs by job_title_short. Keep only job titles where the median salary 
+-- of that group is higher than the median salary of just remote jobs
+SELECT 
+    job_title_short,
+    MEDIAN(salary_year_avg) AS median_salary
+FROM job_postings_fact
+GROUP BY job_title_short
+HAVING MEDIAN(salary_year_avg) > (
+    SELECT MEDIAN(salary_year_avg)
+    FROM job_postings_fact
+    WHERE job_work_from_home = TRUE
+    );
