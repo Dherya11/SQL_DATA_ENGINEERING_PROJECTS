@@ -25,9 +25,41 @@ WHERE tgt.job_id = src.job_id
     AND tgt.priority_lvl IS DISTINCT FROM src.priority_lvl;
 
 -- INSERT STATEMENT
+INSERT INTO main.priority_jobs_snapshot(
+    job_id,
+    job_title_short,
+    company_name,
+    job_posted_date,
+    salary_year_avg,
+    priority_lvl,
+    updated_at
+)
+SELECT 
+    src.job_id,
+    src.job_title_short,
+    src.company_name,
+    src.job_posted_date,
+    src.salary_year_avg,
+    src.priority_lvl,
+    src.updated_at
+FROM src_priority_jobs AS src
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM main.priority_jobs_snapshot AS tgt
+    WHERE tgt.job_id = src.job_id
+    );
+
 
 -- DELETE STATEMENT
+DELETE FROM main.priority_jobs_snapshot AS tgt
+WHERE NOT EXISTS (
 
+
+
+
+
+
+-- Final Check Query 
 SELECT job_title_short,
        COUNT(*) AS job_count,
        MIN(priority_lvl) AS priority_lvl,
