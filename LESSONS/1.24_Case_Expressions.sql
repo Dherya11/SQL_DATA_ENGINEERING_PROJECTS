@@ -98,7 +98,7 @@ SELECT
           WHEN standardized_salary <= 75_000 THEN 'Low'
           WHEN standardized_salary < 150_000 THEN 'Medium'
       ELSE 'High'
-       END  AS salary_Bucket
+    END  AS salary_Bucket
 FROM salaries 
 ORDER BY standardized_salary 
 LIMIT 10;
