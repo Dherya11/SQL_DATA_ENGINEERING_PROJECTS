@@ -45,4 +45,26 @@ SELECT
     END AS job_title_category, job_title_short
 FROM job_postings_fact
 ORDER BY RANDOM()
-LIMIT 20;    
+LIMIT 20;  
+
+-- Conditional Aggregation
+-- Calculate Median Salaries For Different Buckets 
+    -- < $100k
+    -- >= $100k
+
+SELECT 
+     job_title_short,
+     COUNT(*) AS total_postings,
+     MEDIAN(
+           CASE 
+                WHEN salary_year_avg < 100_100 THEN salary_year_avg
+                ELSE NULL 
+            END 
+        ) AS median_low_salary,
+     MEDIAN(
+           CASE 
+                WHEN salary_year_avg >= 100_100 THEN salary_year_avg
+                ELSE NULL 
+            END 
+        ) AS median_high_salary,
+                
