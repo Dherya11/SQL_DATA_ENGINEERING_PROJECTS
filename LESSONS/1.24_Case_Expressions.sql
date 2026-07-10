@@ -66,5 +66,40 @@ SELECT
                 WHEN salary_year_avg >= 100_100 THEN salary_year_avg
                 ELSE NULL 
             END 
-        ) AS median_high_salary,
-                
+        ) AS median_high_salary
+FROM job_postings_fact
+WHERE salary_year_avg IS NOT NULL
+GROUP BY job_title_short;
+
+-- Final Example: Conditional Calculations 
+-- Compute a standardized_salary using yearly salary and adjusted hourly salary (e.g. 2080 hour/year)
+-- Categories salaries into tier of:
+   -- <= 75  'low'
+   -- 75k - 150k 'Medium'
+   -- > 150k 'high'
+  
+WITH salaries AS (
+    SELECT
+        job_title_short,
+        salary_hour_avg,
+        salary_year_avg,
+        CASE 
+            WHEN salary_year_avg IS NOT NULL THEN salary_year_avg
+            WHEN salary_hour_avg IS NOT NULL THEN salary_hour_avg * 2080
+        END AS standardized_salary
+    FROM 
+        job_postings_fact
+    WHERE salary_year_avg IS NOT NULL OR salary_hour_avg IS NOT NULL
+)
+SELECT 
+      *,
+      CASE 
+          WHEN standardized_salary IS NULL THEN 'Missing'
+          WHEN standardized_salary <= 75_000 THEN 'Low'
+          WHEN standardized_salary < 150_000 THEN 'Medium'
+      ELSE 'High'
+       END  AS salary_Bucket
+FROM salaries 
+ORDER BY standardized_salary 
+LIMIT 10;
+      
