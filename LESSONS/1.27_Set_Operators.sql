@@ -23,12 +23,12 @@ SELECT * FROM jobs_2024;
 -- Which unique job postings appeared in either 2023 or 2024 ?
 SELECT 
     'jobs_2023' AS table_name,
-    COUNT(*) 
+    COUNT(*) AS record_count
 FROM jobs_2023
 UNION
 SELECT
     'jobs_2024' AS table_name,
-    COUNT(*) 
+    COUNT(*) AS record_count
 FROM jobs_2024;
 
 SELECT * FROM jobs_2023
