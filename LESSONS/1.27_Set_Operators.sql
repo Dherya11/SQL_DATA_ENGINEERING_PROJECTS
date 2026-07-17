@@ -1,3 +1,11 @@
 SELECT UNNEST([1,1,1,2])
 INTERSECT
 SELECT UNNEST([1,1,3]);
+
+SELECT UNNEST([1, 1, 1, 2])
+EXCEPT ALL
+SELECT UNNEST([1, 1, 3]);
+
+DESCRIBE
+SELECT * EXCLUDE(job_id, job_posted_date)
+FROM job_postings_fact;
