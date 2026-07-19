@@ -53,3 +53,31 @@ FROM
     job_postings_fact
 WHERE salary_hour_avg IS NOT NULL OR salary_year_avg IS NOT NULL 
 LIMIT 10;    
+
+SELECT COALESCE(NULL, NULL, 2) ;
+
+SELECT 
+    salary_year_avg,
+    salary_hour_avg,
+    COALESCE(salary_hour_avg, salary_hour_avg * 2000)
+FROM 
+    job_postings_fact    
+WHERE salary_hour_avg IS NOT NULL OR salary_year_avg IS NOT NULL    
+LIMIT 10;    
+
+-- Final Example - Simplify With Coalesce 
+
+SELECT 
+    job_title_short,
+    salary_year_avg,
+    salary_hour_avg,
+    COALESCE(salary_year_avg, salary_hour_avg * 2080) AS standardized_salary,
+      CASE 
+          WHEN COALESCE(salary_year_avg, salary_hour_avg * 2080) IS NULL THEN 'Missing'
+          WHEN COALESCE(salary_year_avg, salary_hour_avg * 2080) <= 75000 THEN 'Low'
+          WHEN COALESCE(salary_year_avg, salary_hour_avg * 2080) < 150000 THEN 'Medium'
+      ELSE 'High'
+    END AS salary_Bucket
+FROM job_postings_fact
+ORDER BY standardized_salary DESC;
+      
