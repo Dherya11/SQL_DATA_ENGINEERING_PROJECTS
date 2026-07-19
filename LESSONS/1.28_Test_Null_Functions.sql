@@ -43,3 +43,13 @@ SELECT
 FROM title_lower
 ORDER BY RANDOM()
 LIMIT 30;
+
+SELECT NULLIF(10 + 10 , 20);
+
+SELECT 
+    MEDIAN(NULLIF(salary_year_avg, 0)), 
+    MEDIAN(NULLIF(salary_hour_avg, 0))
+FROM 
+    job_postings_fact
+WHERE salary_hour_avg IS NOT NULL OR salary_year_avg IS NOT NULL 
+LIMIT 10;    
