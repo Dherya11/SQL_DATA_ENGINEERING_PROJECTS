@@ -20,7 +20,7 @@ SQL_DATA_ENGINEERING_PROJECTS/
 └── README.md
 ```
 
-> Structure evolves as new lessons and projects are added.
+> THE Structure evolves as new lessons and projects are added.
 
 ---
 
