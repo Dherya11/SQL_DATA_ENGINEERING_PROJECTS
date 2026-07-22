@@ -38,6 +38,7 @@ SQL concepts covered so far, roughly in order:
 | EDA with SQL | Exploratory analysis on real-world job postings data |
 
 *More topics incoming*
+*Lastest Tech*
 
 ---
 
