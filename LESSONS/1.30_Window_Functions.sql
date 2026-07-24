@@ -14,7 +14,6 @@ FROM
     job_postings_fact;    
 
 -- PARTITION BY - Find hourly salary
-   
 SELECT 
     job_id, 
     job_title_short,
@@ -39,7 +38,7 @@ SELECT
     company_id,
     salary_hour_avg,
     RANK() OVER (
-        ORDER BY salary_hour_avg 
+        ORDER BY salary_hour_avg DESC
     ) AS rank_hourly_salary
 
 FROM 
@@ -49,3 +48,22 @@ WHERE
 ORDER BY 
     salary_hour_avg DESC
 LIMIT 10;    
+
+-- PARTITION BY & ORDER BY -- Running Average Hourly Salary
+SELECT 
+    job_id, 
+    job_title_short,
+    company_id,
+    salary_hour_avg,
+    AVG(salary_hour_avg) OVER (
+        PARTITION BY job_title_short,
+        ORDER BY job_posted_date
+    ) AS running_avg_hourly_by_title
+
+FROM 
+    job_postings_fact
+WHERE 
+    salary_hour_avg IS NOT NULL
+ORDER BY 
+    RANDOM()
+LIMIT 10; 
