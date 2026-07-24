@@ -14,11 +14,15 @@ FROM
     job_postings_fact;    
 
 -- PARTITION BY - Find hourly salary
-SELECT 
+   
+  SELECT 
     job_id, 
     job_title_short,
     salary_hour_avg,
-    AVG(salary_hour_avg) OVER ()
-FROM job_postings_facts
-LIMIT 10 ;    
-        
+    AVG(salary_hour_avg) OVER (
+        PARTITION BY job_title_short 
+    )
+FROM job_postings_fact
+ORDER BY 
+    RANDOM()
+LIMIT 10;    
