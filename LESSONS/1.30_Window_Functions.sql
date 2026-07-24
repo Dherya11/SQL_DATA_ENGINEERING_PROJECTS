@@ -62,8 +62,28 @@ SELECT
 FROM 
     job_postings_fact
 WHERE 
-    salary_hour_avg IS NOT NULL
+    salary_hour_avg IS NOT NULL AND 
+    job_title_short = 'Data Engineer'
 ORDER BY 
     job_title_short, 
     job_posted_date
 LIMIT 10; 
+
+-- PARTITION & ORDER BY - Ranking by job_title_short 
+SELECT 
+    job_id, 
+    job_title_short,
+    salary_hour_avg,
+    RANK() OVER (
+        PARTITION BY job_title_short
+        ORDER BY salary_hour_avg DESC
+    ) AS rank_hourly_salary
+
+FROM 
+    job_postings_fact
+WHERE 
+    salary_hour_avg IS NOT NULL
+ORDER BY 
+    salary_hour_avg DESC,
+    job_title_short
+LIMIT 10;  
