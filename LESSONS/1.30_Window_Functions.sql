@@ -51,12 +51,11 @@ LIMIT 10;
 
 -- PARTITION BY & ORDER BY -- Running Average Hourly Salary
 SELECT 
-    job_id, 
+    job_posted_date, 
     job_title_short,
-    company_id,
     salary_hour_avg,
     AVG(salary_hour_avg) OVER (
-        PARTITION BY job_title_short,
+        PARTITION BY job_title_short
         ORDER BY job_posted_date
     ) AS running_avg_hourly_by_title
 
@@ -65,5 +64,6 @@ FROM
 WHERE 
     salary_hour_avg IS NOT NULL
 ORDER BY 
-    RANDOM()
+    job_title_short, 
+    job_posted_date
 LIMIT 10; 
