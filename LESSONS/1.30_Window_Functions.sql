@@ -24,9 +24,28 @@ SELECT
         PARTITION BY job_title_short, company_id 
     )
 
-FROM job_postings_fact
+FROM 
+    job_postings_fact
 WHERE 
     salary_hour_avg IS NOT NULL
 ORDER BY 
     RANDOM()
+LIMIT 10;    
+
+-- ORDER BY - Ranking Hourly salary 
+SELECT 
+    job_id, 
+    job_title_short,
+    company_id,
+    salary_hour_avg,
+    RANK() OVER (
+        ORDER BY salary_hour_avg 
+    ) AS rank_hourly_salary
+
+FROM 
+    job_postings_fact
+WHERE 
+    salary_hour_avg IS NOT NULL
+ORDER BY 
+    salary_hour_avg DESC
 LIMIT 10;    
